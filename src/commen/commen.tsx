@@ -1,43 +1,42 @@
-
-import pairIcon from "../asset/icon/card.svg"
-import favoriteIcon from "../asset/icon/favorites.svg"
-import typeIcon from "../asset/icon/collar.svg"
-import hospitalIcon from "../asset/icon/hospital.svg"
-import letterIcon from "../asset/icon/color.svg"
-
+import { FavoriteIcon, HospitalIcon, LetterIcon, PairIcon, TypeIcon } from "../component/Icons";
 
 
 
 export const routes = [
   {
-    path : "/",
-    icon : `${pairIcon}`,
-    tit : "配對",
-    component : <></>
+    path: "/",
+    icon: PairIcon,
+    iconObj: PairIcon,
+    tit: "配對",
+    component: <></>
   },
   {
-    path : "/favorite",
-    icon : `${favoriteIcon}`,
-    tit : "收藏",
-    component : <></>
+    path: "/favorite",
+    icon: FavoriteIcon,
+    iconObj: FavoriteIcon,
+    tit: "收藏",
+    component: <></>
   },
   {
-    path : "/type",
-    icon : `${typeIcon}`,
-    tit : "主題",
-    component : <></>
+    path: "/type",
+    icon: TypeIcon,
+    iconObj: TypeIcon,
+    tit: "主題",
+    component: <></>
   },
   {
-    path : "/letter",
-    icon : `${letterIcon}`,
-    tit : "送養",
-    component : <></>
+    path: "/letter",
+    icon: LetterIcon,
+    iconObj: LetterIcon,
+    tit: "送養",
+    component: <></>
   },
   {
-    path : "/animal-hospital",
-    icon : `${hospitalIcon}`,
-    tit : "急診",
-    component : <></>
+    path: "/animal-hospital",
+    icon: HospitalIcon,
+    iconObj: HospitalIcon,
+    tit: "急診",
+    component: <></>
   },
 ]
 

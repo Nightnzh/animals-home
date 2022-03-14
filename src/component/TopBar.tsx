@@ -1,13 +1,9 @@
-import { Box, Center, Container, Flex, Image, Link, LinkBoxProps, LinkProps, styled } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "../ColorModeSwitcher"
+import { Box, Center, Container, Flex, Image, Link, Text } from "@chakra-ui/react"
 import headerLogo from "../asset/header_logo.svg"
-import { routes } from "../commen/commen"
-import { useContext, useEffect } from "react"
+import React, { ReactElement, useContext } from "react"
 import { Ctx } from "../commen/context"
-
-
-
-
+import { Link as Linker, useLocation } from "react-router-dom"
+// import { ColorModeSwitcher } from "../ColorModeSwitcher"
 
 
 export const AppBar = () => {
@@ -22,7 +18,7 @@ export const AppBar = () => {
             <Image h="10" src={headerLogo} alt="header-logo"></Image>
           </Center>
           <Center>
-            {ctx.routes.map(value => <LinkItem  key={value.tit} icon={value.icon} tit={value.tit} href={value.path} alt={undefined}/>)}
+            {ctx.routes.map(value => <LinkItem key={value.tit} iconObj={<value.iconObj  boxSize="6" pathName={value.path} />} tit={value.tit} pathName={value.path} alt={null} />)}
             {/* <ColorModeSwitcher /> */}
           </Center>
         </Flex>
@@ -33,29 +29,29 @@ export const AppBar = () => {
 
 
 interface LinkItemProps {
-  icon: string,
+  iconObj: JSX.Element,
   tit: string,
-  href: string,
-  alt: string | undefined
+  pathName: string,
+  alt: string | null
 }
 
-const LinkItem = ({ href, icon, tit , alt = ""}: LinkItemProps) => {
 
-  const isTarget  = window.location.pathname === href
-  // console.log(tit)
-  // console.log(window.location.pathname)
-  // console.log(isTarget)
-  const fillColor = "#fda098"
+
+const LinkItem = ({ pathName, tit, iconObj, alt }: LinkItemProps) => {
+
+  //This is funcking useful
+  const location = useLocation()
 
   return (
-    <Link href={href} >
+    <Link as={Linker} to={pathName} >
       <Flex>
-        <Center>
-          <Image boxSize="6"  src={icon} alt={alt} fill={isTarget ? fillColor : "#d9d9d9"}></Image>
-          {isTarget ? <h3 color={"#666"}>{tit}</h3> : ""}
+        <Center >
+          {iconObj}
+          <Text w="60px" textAlign="center">{location.pathname === pathName ? tit : ""}</Text>
         </Center>
       </Flex>
     </Link>
   )
 }
+
 

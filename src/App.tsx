@@ -7,13 +7,18 @@ import {
 } from "@chakra-ui/react"
 import { AppBar } from "./component/TopBar"
 import { Route, Routes } from "react-router-dom"
-import { Ctx } from "./commen/context"
+import { Ctx, ctxObj } from "./commen/context"
 import { routes } from "./commen/commen"
 
 
 
 const myTheme = extendTheme(
-  {
+  { 
+    semanticTokens : {
+      colors : {
+        fillColor : "#fda098"
+      }
+    },
     components : {
       Container :{
         baseStyle : {
@@ -34,7 +39,7 @@ export const App = () => {
   // const [isLogin, setIsLogin] = React.useState(false)
   return (
     <ChakraProvider theme={myTheme}>
-      <Ctx.Provider  value={{routes : routes}}>
+      <Ctx.Provider  value={ctxObj}>
       {/*TODO: Wrapper Auth state provider */}
       <AppBar/>
       {/* Routes */}

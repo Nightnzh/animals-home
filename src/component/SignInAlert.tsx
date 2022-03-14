@@ -14,6 +14,8 @@ import { useRef, useState } from 'react'
 
 
 
+//TODO:Use firebase google login
+
 interface AuthProps {
   isLogin : Boolean
 }
