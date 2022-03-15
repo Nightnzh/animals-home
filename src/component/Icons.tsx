@@ -5,7 +5,7 @@ import { Ctx } from "../commen/context";
 
 
 
-
+// 更進階模組化 ： 把 <path d="..."/> 裡的 d 當作參數傳
 
 
 interface MyIconProps {

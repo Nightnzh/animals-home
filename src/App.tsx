@@ -1,9 +1,13 @@
-import * as React from "react"
-
+import React, { useEffect, useState } from "react"
+import LoadingGif from "./asset/logo_.gif"
 
 import {
+  Box,
   ChakraProvider,
   extendTheme,
+  Image,
+  Wrap,
+  Text
 } from "@chakra-ui/react"
 import { AppBar } from "./component/TopBar"
 import { Route, Routes } from "react-router-dom"
@@ -11,23 +15,24 @@ import { Ctx, ctxObj } from "./commen/context"
 import { routes } from "./commen/commen"
 
 
-
+//chakra costom theme
 const myTheme = extendTheme(
-  { 
-    semanticTokens : {
-      colors : {
-        fillColor : "#fda098"
+  {
+    semanticTokens: {
+      colors: {
+        fillColor: "#fda098", //not use
+        // bgColor : "#f7f7f7"
       }
     },
-    components : {
-      Container :{
-        baseStyle : {
-          maxW : "container.xl"
+    components: {
+      Container: {
+        baseStyle: {
+          maxW: "container.xl"
         }
       },
-      Link : {
-        baseStyle : {
-          color : "#fda098"
+      Link: {
+        baseStyle: {
+          color: "#fda098"
         }
       }
     }
@@ -36,44 +41,58 @@ const myTheme = extendTheme(
 
 
 export const App = () => {
-  // const [isLogin, setIsLogin] = React.useState(false)
+  
+
+  //用於判斷是否顯示main
+  const [showMain,setShowMain] = useState(false)
+  //網頁開啟後兩秒進入main , 之後可以改成loading完data後進入
+  useEffect(()=>{
+    const timeOut = setTimeout(()=>{
+      setShowMain(true)
+    },2000)
+    return () => clearTimeout(timeOut)
+  },[showMain])
+
+  //init loading
+  if(!showMain) return (
+    <ChakraProvider theme={myTheme}>
+      <InitLoading/>
+    </ChakraProvider>
+  )
+
+  //Main
   return (
     <ChakraProvider theme={myTheme}>
-      <Ctx.Provider  value={ctxObj}>
-      {/*TODO: Wrapper Auth state provider */}
-      <AppBar/>
-      {/* Routes */}
-      <Routes>
-        {routes.map(value => <Route key={value.tit} path={value.path} element={value.component}/>)}
-      </Routes>
+      <Ctx.Provider value={ctxObj}>
+        
+        {/*TODO: Wrapper Auth state provider */}
+        <AppBar />
+        {/* Routes */}
+        <Routes>
+          {routes.map(value => <Route key={value.tit} path={value.path} element={value.component} />)}
+        </Routes>
       </Ctx.Provider>
     </ChakraProvider>
   )
 }
 
 
-/** Default
- * 
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
- */
+
+const InitLoading = () => (
+  <Box
+    h="100vh"
+    bgColor="bgColor"
+    d="flex"
+    justifyContent="center"
+    alignItems="center"
+    // flexDirection="column"
+    position="relative"
+  >
+    <Box>
+      <Image  src={LoadingGif} alt="InitLoading" /> 
+    </Box>
+    <Text fontSize="12px" position="absolute" bottom="2" textAlign="center">PetNi @ Code: Night.Xu / Design: K.T</Text>
+  </Box>
+)
+
+
