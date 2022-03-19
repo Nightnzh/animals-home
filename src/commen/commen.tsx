@@ -4,7 +4,7 @@ import { FavoriteIcon, HospitalIcon, LetterIcon, PairIcon, TypeIcon } from "../c
 
 export const routes = [
   {
-    path: "/pair",
+    path: "/",
     icon: PairIcon,
     iconObj: PairIcon,
     tit: "配對",

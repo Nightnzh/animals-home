@@ -4,8 +4,8 @@ import { useLocation } from "react-router-dom";
 import { Ctx } from "../commen/context";
 
 
-
-// 更進階模組化 ： 把 <path d="..."/> 裡的 d 當作參數傳
+// 試過把直接修改 <Image fill="#..." /> 的fill顏色,此方法一直都是失敗的... 
+// 更進階模組化 ： 把svg <path d="..."/> 裡的 d 當作參數傳
 
 
 interface MyIconProps {
