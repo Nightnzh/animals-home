@@ -15,6 +15,7 @@ import { routes } from "./commen/commen"
 import { rootState } from "./redux/states"
 import configureAppStore from "./redux/store"
 import { Provider } from "react-redux"
+import { TestN } from "./testcomponent/TestComponent"
 
 
 //chakra costom theme
@@ -66,14 +67,14 @@ export const App = () => {
   return (
     <ChakraProvider theme={myTheme}>
       <Ctx.Provider value={ctxObj}>
-        <Provider store={configureAppStore(rootState)}>
+        <Provider store={configureAppStore()}>
           {/*TODO: Wrapper Auth state provider */}
           <AppBar />
           {/* Routes */}
           <Routes>
             {routes.map(value => <Route key={value.tit} path={value.path} element={value.component} />)}
           </Routes>
-          {/* <TestN/> */}
+          <TestN/>
         </Provider>
       </Ctx.Provider>
     </ChakraProvider>

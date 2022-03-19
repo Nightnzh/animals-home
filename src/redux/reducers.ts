@@ -1,4 +1,5 @@
 import { combineReducers, createReducer, createSlice } from "@reduxjs/toolkit";
+import { animalsApiSlice } from "../service/animalsapi";
 import { ACTION_SHOW_CAT, ACTION_SHOW_DOG } from "./actions";
 import { rootState } from "./states";
 
@@ -24,8 +25,12 @@ const animalSlice = createSlice({
         default : 
           return state
       }
-    }
+    },
+    addAnimals : (state,action) => ({
+      filterVisibility : state.filterVisibility,
+      animalsData : action.payload
+    })
   }
 })
 
-export const rootReducers = animalSlice.reducer
+export const animalsReducers =  animalSlice.reducer

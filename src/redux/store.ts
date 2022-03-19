@@ -4,9 +4,10 @@ import logger from 'redux-logger'
 import { composeWithDevTools } from "redux-devtools-extension";
 import { ACTION_SHOW_ALL } from "./actions";
 import { Animal } from "../types";
-import { rootReducers } from "./reducers";
+import { animalsReducers } from "./reducers";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { rootState } from "./states";
+import { animalsApiSlice } from "../service/animalsapi";
 
 
 
@@ -16,7 +17,7 @@ import { rootState } from "./states";
 
 
 
-export default function configureAppStore(preloadState : typeof rootState) {
+export default function configureAppStore() {
 
   // const middleware = [logger]
   // const middwareEnhancer  = applyMiddleware(...middleware)
@@ -35,9 +36,12 @@ export default function configureAppStore(preloadState : typeof rootState) {
   // }
 
   const store = configureStore({
-    reducer: rootReducers,
-    middleware: [logger, ...getDefaultMiddleware()],
-    preloadedState : preloadState,
+    reducer: {
+      ...animalsReducers,
+      [animalsApiSlice.reducerPath] : animalsApiSlice.reducer
+    },
+    middleware: [logger, ...getDefaultMiddleware().concat(animalsApiSlice.middleware)],
+    // preloadedState : preloadState,
     // enhancers: [monitorReducersEnhancer]
   })
 
