@@ -37,7 +37,7 @@ const myTheme = extendTheme(
         baseStyle: {
           color: "#fda098"
         }
-      }
+      },
     }
   }
 )
@@ -74,7 +74,7 @@ export const App = () => {
           <Routes>
             {routes.map(value => <Route key={value.tit} path={value.path} element={value.component} />)}
           </Routes>
-          <TestN/>
+          {/* <TestN/> */}
         </Provider>
       </Ctx.Provider>
     </ChakraProvider>

@@ -22,7 +22,7 @@ export const TestN = () =>  {
     {console.log(data)}
     return (
       // <TT text={data.map(value => value.animal_kind).toString()}/>
-      <Text>{data.map(value => value.animal_kind).toString()}</Text>
+      <Text>{ new Set(data.map(value => value.animal_colour))}</Text>
     )
   }
 

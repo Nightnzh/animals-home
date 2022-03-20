@@ -1,4 +1,6 @@
 import { FavoriteIcon, HospitalIcon, LetterIcon, PairIcon, TypeIcon } from "../component/Icons";
+import { Pair } from "../page/Pair";
+import { TestN } from "../testcomponent/TestComponent";
 
 
 
@@ -8,7 +10,7 @@ export const routes = [
     icon: PairIcon,
     iconObj: PairIcon,
     tit: "配對",
-    component: <></>
+    component: <Pair/>
   },
   {
     path: "/favorite",

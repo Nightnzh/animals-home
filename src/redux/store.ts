@@ -40,7 +40,10 @@ export default function configureAppStore() {
       ...animalsReducers,
       [animalsApiSlice.reducerPath] : animalsApiSlice.reducer
     },
-    middleware: [logger, ...getDefaultMiddleware().concat(animalsApiSlice.middleware)],
+    middleware: [
+      // logger,
+      ...getDefaultMiddleware().concat(animalsApiSlice.middleware)
+    ],
     // preloadedState : preloadState,
     // enhancers: [monitorReducersEnhancer]
   })
