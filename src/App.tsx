@@ -24,7 +24,7 @@ const myTheme = extendTheme(
     semanticTokens: {
       colors: {
         fillColor: "#fda098", //not use
-        bgColor: "#f7f7f7"
+        bgColor: "#f7f7f7",
       }
     },
     components: {

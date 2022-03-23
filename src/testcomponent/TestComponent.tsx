@@ -19,7 +19,7 @@ export const TestN = () =>  {
 
   if(isSuccess){
 
-    {console.log(data)}
+    // {console.log(data)}
     return (
       // <TT text={data.map(value => value.animal_kind).toString()}/>
       <Text>{ new Set(data.map(value => value.animal_colour))}</Text>
