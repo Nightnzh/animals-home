@@ -11,14 +11,18 @@ export const AppBar = () => {
   const ctx = useContext(Ctx)
 
   return (
-    <Box  p="2" h="6vh">
+    <Box p="2" position="fixed" w="100%" boxShadow="xl" h="60px" zIndex={"10000"}>
       <Container >
         <Flex justifyContent="space-between" py="1">
           <Center>
             <Image h="10" src={headerLogo} alt="header-logo"></Image>
           </Center>
           <Center>
-            {ctx.routes.map(value => <LinkItem key={value.tit} iconObj={<value.iconObj  boxSize="6" pathName={value.path} />} tit={value.tit} pathName={value.path} alt={null} />)}
+            {ctx.routes.map(value => <LinkItem key={value.tit}
+              iconObj={<value.iconObj boxSize="6" pathName={value.path} />}
+              tit={value.tit} pathName={value.path}
+              alt={null} />)
+            }
             {/* <ColorModeSwitcher /> */}
           </Center>
         </Flex>

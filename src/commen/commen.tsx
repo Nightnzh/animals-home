@@ -1,5 +1,5 @@
 import { FavoriteIcon, HospitalIcon, LetterIcon, PairIcon, TypeIcon } from "../component/Icons";
-import { Pair } from "../page/Pair";
+import { Pair } from "../page/pair";
 import { TestN } from "../testcomponent/TestComponent";
 
 

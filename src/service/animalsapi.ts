@@ -22,11 +22,13 @@ export const animalsApiSlice = createApi({
   reducerPath:"animalsApi",
   baseQuery: fetchBaseQuery({baseUrl : api_url}),
   endpoints: builder => ({
-    getAnimalsData : builder.query<Animal[],string>({
+    getAnimalsData : builder.query<Animal[],void>({
       query : () => ""
       })
   })
 })
 
 
-export const { useGetAnimalsDataQuery } = animalsApiSlice
+
+
+export const { useGetAnimalsDataQuery  } = animalsApiSlice

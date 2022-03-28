@@ -7,7 +7,7 @@ import { useGetAnimalsDataQuery } from "../service/animalsapi";
 
 export const TestN = () =>  {
 
-  const { data , isLoading , isFetching , error , isSuccess , } = useGetAnimalsDataQuery("")
+  const { data , isLoading , isFetching , error , isSuccess , } = useGetAnimalsDataQuery()
 
   if(isLoading || isFetching){
     return <Text>loading</Text>

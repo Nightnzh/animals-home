@@ -1,36 +1,28 @@
-import { combineReducers, createReducer, createSlice } from "@reduxjs/toolkit";
-import { animalsApiSlice } from "../service/animalsapi";
-import { ACTION_SHOW_CAT, ACTION_SHOW_DOG } from "./actions";
-import { rootState } from "./states";
+import { createSlice } from "@reduxjs/toolkit";
+import { animalRootState } from "./states";
 
 
 
 
 const animalSlice = createSlice({
   name: "animals",
-  initialState: rootState,
+  initialState: animalRootState,
   reducers: {
-    filterAnimals :  (state,action) => {
-      switch(action.type){
-        case ACTION_SHOW_CAT :
-          return {
-            filterVisibility : ACTION_SHOW_CAT,
-            animalsData : state.animalsData.filter(value => value.animal_kind === "貓")
-          }
-        case ACTION_SHOW_DOG :
-          return {
-            filterVisibility : ACTION_SHOW_DOG,
-            animalsData : state.animalsData.filter(value => value.animal_kind === "狗")
-          }
-        default : 
-          return state
+    replaceAnimals : (state, action ) => ({
+      ...state,
+      animalsData : action.payload,
+    }),
+
+    setFilter : (state, action) => {
+      return {
+        ...state,
+        filter : action.payload
       }
     },
-    addAnimals : (state,action) => ({
-      filterVisibility : state.filterVisibility,
-      animalsData : action.payload
-    })
+    
   }
 })
 
-export const animalsReducers =  animalSlice.reducer
+export const { replaceAnimals ,setFilter } = animalSlice.actions
+
+export const animalsReducer =  animalSlice.reducer

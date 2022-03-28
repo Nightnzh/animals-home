@@ -12,10 +12,8 @@ import { AppBar } from "./component/TopBar"
 import { Route, Routes } from "react-router-dom"
 import { Ctx, ctxObj } from "./commen/context"
 import { routes } from "./commen/commen"
-import { rootState } from "./redux/states"
-import configureAppStore from "./redux/store"
 import { Provider } from "react-redux"
-import { TestN } from "./testcomponent/TestComponent"
+import { store } from "./redux/store"
 
 
 //chakra costom theme
@@ -65,9 +63,10 @@ export const App = () => {
 
   //Main
   return (
+    <React.StrictMode>
     <ChakraProvider theme={myTheme}>
       <Ctx.Provider value={ctxObj}>
-        <Provider store={configureAppStore()}>
+        <Provider store={store}>
           {/*TODO: Wrapper Auth state provider */}
           <AppBar />
           {/* Routes */}
@@ -78,6 +77,7 @@ export const App = () => {
         </Provider>
       </Ctx.Provider>
     </ChakraProvider>
+    </React.StrictMode>
   )
 }
 
