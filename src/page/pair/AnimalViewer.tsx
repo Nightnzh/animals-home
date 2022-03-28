@@ -36,7 +36,7 @@ const mapStateToProps = (state: StoreRootState) => {
 
   // console.log(state.animals.animalsData.map(value => value.animal_age).sort());
 
-
+  // filter fun
   const filterData = () => {
 
     let temp = state.animals.animalsData
@@ -59,9 +59,6 @@ const mapStateToProps = (state: StoreRootState) => {
       temp = temp.filter(value => filter.kindColor === value.animal_colour)
     }
 
-
-    // console.log(temp.map(value => value.animal_colour));
-
     return temp
   }
 
@@ -69,7 +66,6 @@ const mapStateToProps = (state: StoreRootState) => {
 
   return {
     data: data,
-    // size: data.length
   }
 }
 
@@ -84,21 +80,18 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
 
 
   const [ani, setAni] = useState<Animal | undefined>(props.data[Math.floor(Math.random() * props.data.length)])
-  const randomNumFn = () => {
+  const randomFn = () => {
     setAni(props.data[Math.floor(Math.random() * props.data.length)])
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure() // controller modal
 
-  const testC = useRef(0)
 
   useEffect(() => {
-    if(ani === undefined){
+    
       setAni(props.data[Math.floor(Math.random() * props.data.length)])
-      testC.current++
-      console.log(testC);
-    }
-  })
+    
+  }, [props]) //當 props state 且 ani === undefined 重新 random
 
 
 
@@ -108,12 +101,12 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
         {/* {props.singleAnimal === undefined ? <Loading/> : props.singleAnimal.animal_colour} */}
         {/* <Text>{randomNum}</Text> */}
         <AnimalCard
-          onXXClick={randomNumFn}
+          onXXClick={randomFn}
           onFavClick={() => { }}
           onInfoClick={onOpen}
           animal={ani!!} />
 
-        <Button onClick={randomNumFn}>Random</Button>
+        <Button onClick={randomFn}>Random</Button>
       </Center>
 
 
@@ -152,10 +145,29 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
       <Box border={border} boxSizing="border-box" width="500px" h="500px" position="relative" >
         <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(20deg)" zIndex="2" bgColor="#FFF" />
         <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(10deg)" zIndex="1" bgColor="#FFF" />
-        <Text align="center" color="#fda59e" zIndex={"5"} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%)" fontWeight="800" >
-          很抱歉！<br />已經沒有單身狗、單身貓了，<br />請嘗試修改篩選條件。
+        <Text
+          align="center"
+          color="#fda59e"
+          zIndex={"5"}
+          position="absolute"
+          top="50%" left="50%"
+          transform="translate(-50%,-50%)"
+          fontWeight="800" >
+          很抱歉！<br />
+          已經沒有單身狗、單身貓了，<br />
+          請嘗試修改篩選條件。
         </Text>
-        <Box border="1px solid rgba(0,0,0,0.3)" boxShadow="2xl" w={width} height={"auto"} minH="100px" rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(-5deg)" zIndex="3" bgColor="#FFF" p="12px" />
+        {/* <Box border="1px solid rgba(0,0,0,0.3)"
+          boxShadow="2xl" w={width}
+          height={"auto"}
+          minH="100px"
+          rounded={rounded}
+          position="absolute"
+          top="50%" left="50%"
+          transform="translate(-50%,-50%) rotate(-5deg)"
+          zIndex="3"
+          bgColor="#FFF"
+          p="12px" /> */}
       </Box>
     )
   }
