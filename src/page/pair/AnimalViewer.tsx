@@ -1,5 +1,5 @@
 
-import { Center, Text, Image, Box, Button, IconButton, Flex, useDisclosure, } from "@chakra-ui/react";
+import { Center, Text, Image, Box, Button, IconButton, Flex, useDisclosure, VStack, HStack, } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { StoreRootState } from "../../redux/store";
@@ -18,6 +18,8 @@ import caterror from "../../asset/caterror.png"
 import dogerror from "../../asset/dogerror.png"
 import { ErrorImg } from "./ErrorImg";
 import { AnimalModal } from "./AnimalInfoModal";
+import { AnimalSmallCard } from "./AmimalSmallCard";
+
 
 
 
@@ -62,10 +64,31 @@ const mapStateToProps = (state: StoreRootState) => {
     return temp
   }
 
+  const getRandom = (arr: Animal[], n: number) => {
+
+    let result = new Array<Animal>(n),
+      len = arr.length,
+      taken = new Array(len);
+    try {
+      if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+      while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+      }
+      console.log(result);
+    }  catch(e) {
+      console.log(e);
+    }
+    return result;
+  }
+
   const data = filterData()
 
   return {
     data: data,
+    noFilterRandomDatas: getRandom(state.animals.animalsData, 3)
   }
 }
 
@@ -79,7 +102,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 const PairAnimalViewer = (props: PropsFromRedux) => {
 
 
-  const [ani, setAni] = useState<Animal | undefined>(props.data[Math.floor(Math.random() * props.data.length)])
+  const [ani, setAni] = useState<Animal | undefined>(undefined)
   const randomFn = () => {
     setAni(props.data[Math.floor(Math.random() * props.data.length)])
   }
@@ -88,16 +111,21 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
 
 
   useEffect(() => {
-    
-      setAni(props.data[Math.floor(Math.random() * props.data.length)])
-    
-  }, [props]) //當 props state 且 ani === undefined 重新 random
+
+    setAni(props.data[Math.floor(Math.random() * props.data.length)])
+
+  }, [props.data]) //當 props state 且 ani === undefined 重新 random
 
 
 
   return (
     <>
-      <Center border="1px" h="100%" >
+      <Flex
+        // border="1px"
+        h="100%"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent={"space-around"}>
         {/* {props.singleAnimal === undefined ? <Loading/> : props.singleAnimal.animal_colour} */}
         {/* <Text>{randomNum}</Text> */}
         <AnimalCard
@@ -105,9 +133,19 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
           onFavClick={() => { }}
           onInfoClick={onOpen}
           animal={ani!!} />
-
-        <Button onClick={randomFn}>Random</Button>
-      </Center>
+        <HStack>
+          {
+            props.noFilterRandomDatas.length != 0 && props.noFilterRandomDatas != undefined ?
+              props.noFilterRandomDatas.map(value => {
+                return (
+                  <AnimalSmallCard key={value.animal_id} animal={value} onClick={() => { }} />
+                )
+              })
+              : <></>
+          }
+          <Button onClick={randomFn}>Random</Button>
+        </HStack>
+      </Flex>
 
 
       {ani !== undefined ?
@@ -130,6 +168,8 @@ interface AnimalCardProps {
   onInfoClick: React.MouseEventHandler
 }
 
+
+// FIXME: 這裡太亂了
 const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardProps) => {
 
 
@@ -157,17 +197,6 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
           已經沒有單身狗、單身貓了，<br />
           請嘗試修改篩選條件。
         </Text>
-        {/* <Box border="1px solid rgba(0,0,0,0.3)"
-          boxShadow="2xl" w={width}
-          height={"auto"}
-          minH="100px"
-          rounded={rounded}
-          position="absolute"
-          top="50%" left="50%"
-          transform="translate(-50%,-50%) rotate(-5deg)"
-          zIndex="3"
-          bgColor="#FFF"
-          p="12px" /> */}
       </Box>
     )
   }

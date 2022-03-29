@@ -1,11 +1,10 @@
 import { applyMiddleware, combineReducers, configureStore, createStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 // Logger with default options
 import logger from 'redux-logger'
-import { animalsReducer } from "./reducers";
-import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
-import { animalRootState } from "./states";
+import { animalsReducer } from "./aniReducers";
 import { animalsApiSlice } from "../service/animalsapi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { firebaseReducer } from "react-redux-firebase";
 
 
 
@@ -27,7 +26,8 @@ export const store = configureStore(
     reducer: 
     {
       animals : animalsReducer,
-      [animalsApiSlice.reducerPath]: animalsApiSlice.reducer
+      [animalsApiSlice.reducerPath]: animalsApiSlice.reducer,
+      firebase : firebaseReducer
     },
     middleware:  (getDefaultMiddleware) => [
       // logger,
