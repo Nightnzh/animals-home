@@ -11,7 +11,7 @@ export const AppBar = () => {
   const ctx = useContext(Ctx)
 
   return (
-    <Box p="2" position="fixed" w="100%" boxShadow="xl" h="60px" zIndex={"10000"}>
+    <Box p="2" position="fixed"  top="0" w="100%" boxShadow="xl" h="60px" zIndex={"1000"} bgColor="#FFF">
       <Container >
         <Flex justifyContent="space-between" py="1">
           <Center>

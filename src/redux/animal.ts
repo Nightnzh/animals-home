@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { animalRootState } from "./states";
+import { animalRootState } from "./ani_sate";
 
 
 
 
-const animalSlice = createSlice({
+export const animalSlice = createSlice({
   name: "animals",
   initialState: animalRootState,
   reducers: {
@@ -26,3 +26,5 @@ const animalSlice = createSlice({
 export const { replaceAnimals ,setFilter } = animalSlice.actions
 
 export const animalsReducer =  animalSlice.reducer
+
+export  type  AnimalRootState = ReturnType< typeof animalsReducer>

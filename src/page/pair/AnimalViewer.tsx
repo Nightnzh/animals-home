@@ -1,8 +1,8 @@
 
 import { Center, Text, Image, Box, Button, IconButton, Flex, useDisclosure, VStack, HStack, } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { StoreRootState } from "../../redux/store";
+import { connect, ConnectedProps, useSelector } from "react-redux";
+import { StoreState } from "../../redux/store";
 import { Animal } from "../../types";
 
 import loadingImg from "../../asset/header_logo.svg"
@@ -12,26 +12,27 @@ import favIcon from "../../asset/fav.png"
 import xxIcon from "../../asset/xx.png"
 import maleIcon from "../../asset/male.png"
 import feMateIcon from "../../asset/female.png"
-import { motion } from 'framer-motion'
+// import { motion } from 'framer-motion'
 
 import caterror from "../../asset/caterror.png"
 import dogerror from "../../asset/dogerror.png"
 import { ErrorImg } from "./ErrorImg";
-import { AnimalModal } from "./AnimalInfoModal";
+import { AnimalModal } from "../../component/AnimalInfoModal";
 import { AnimalSmallCard } from "./AmimalSmallCard";
+import { useFirestore } from "react-redux-firebase";
 
 
 
 
 //TODO: using this to add animate and event
-const Motion = motion(Box)
+// const Motion = motion(Box)
 
 
 // using react-redux connect!
 // typescript also need more detail!!!
 
 
-const mapStateToProps = (state: StoreRootState) => {
+const mapStateToProps = (state: StoreState) => {
 
   const filter = state.animals.filter
 
@@ -77,8 +78,8 @@ const mapStateToProps = (state: StoreRootState) => {
         result[n] = arr[x in taken ? taken[x] : x];
         taken[x] = --len in taken ? taken[len] : len;
       }
-      console.log(result);
-    }  catch(e) {
+      // console.log(result);
+    } catch (e) {
       console.log(e);
     }
     return result;
@@ -109,13 +110,46 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure() // controller modal
 
-
   useEffect(() => {
 
     setAni(props.data[Math.floor(Math.random() * props.data.length)])
 
   }, [props.data]) //當 props state 且 ani === undefined 重新 random
 
+
+  const authId = useSelector((state: StoreState) => state.firebase.auth.uid)
+
+  const firestore = useFirestore()
+
+
+
+  const addFavAni = (ani: Animal) => {
+
+    let isErr = false
+
+    if (authId === undefined) {
+      alert("auth is undefined")
+      return
+    }
+
+    firestore
+      .collection('fav')
+      .doc(authId)
+      .collection('favorites')
+      .doc(ani.animal_id.toString())
+      .set(ani)
+      .catch(e => {
+        isErr = true
+        console.log(e);
+        alert(e)
+      }).finally(() => {
+        if (!isErr) {
+          randomFn()
+        }
+      })
+
+
+  }
 
 
   return (
@@ -130,7 +164,7 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
         {/* <Text>{randomNum}</Text> */}
         <AnimalCard
           onXXClick={randomFn}
-          onFavClick={() => { }}
+          onFavClick={addFavAni}
           onInfoClick={onOpen}
           animal={ani!!} />
         <HStack>
@@ -164,7 +198,7 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
 interface AnimalCardProps {
   animal: Animal,
   onXXClick: React.MouseEventHandler,
-  onFavClick: React.MouseEventHandler,
+  onFavClick: (ani: Animal) => void,
   onInfoClick: React.MouseEventHandler
 }
 
@@ -237,7 +271,7 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
               </Text>
             </Flex>
             <IconButton aria-label={""}
-              onClick={onFavClick}
+              onClick={() => { onFavClick(animal) }}
               bgColor="rgba(0,0,0,0)"
               _hover={{ bgColor: "rgba(0,0,0,0)" }}
               boxSize="50px" minW="50px">

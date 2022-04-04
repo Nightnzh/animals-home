@@ -14,6 +14,8 @@ import { Ctx, ctxObj } from "./commen/context"
 import { routes } from "./commen/commen"
 import { Provider } from "react-redux"
 import { store } from "./redux/store"
+import { ReactReduxFirebaseProvider } from "react-redux-firebase"
+import { rrfProps } from "./redux/firebase"
 
 
 //chakra costom theme
@@ -64,19 +66,22 @@ export const App = () => {
   //Main
   return (
     <React.StrictMode>
-    <ChakraProvider theme={myTheme}>
-      <Ctx.Provider value={ctxObj}>
-        <Provider store={store}>
-          {/*TODO: Wrapper Auth state provider */}
-          <AppBar />
-          {/* Routes */}
-          <Routes>
-            {routes.map(value => <Route key={value.tit} path={value.path} element={value.component} />)}
-          </Routes>
-          {/* <TestN/> */}
-        </Provider>
-      </Ctx.Provider>
-    </ChakraProvider>
+      <ChakraProvider theme={myTheme}>
+        <Ctx.Provider value={ctxObj}>
+          <Provider store={store}>
+            {/*TODO: Wrapper Auth state provider */}
+            <ReactReduxFirebaseProvider  {...rrfProps}>
+              <AppBar />
+
+              {/* Routes */}
+              <Routes>
+                {routes.map(value => <Route key={value.tit} path={value.path} element={value.component} />)}
+              </Routes>
+              {/* <TestN/> */}
+            </ReactReduxFirebaseProvider>
+          </Provider>
+        </Ctx.Provider>
+      </ChakraProvider>
     </React.StrictMode>
   )
 }

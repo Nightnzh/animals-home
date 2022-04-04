@@ -1,19 +1,15 @@
-import { Box, BoxProps, Button, ButtonGroup, ButtonProps, calc, Center, Flex, Grid, HStack, Select, styled, Switch, TagLabel, Text, VStack } from "@chakra-ui/react"
-import React, { useContext, useEffect, useState } from "react"
+import { Box, Button, Center, Flex } from "@chakra-ui/react"
+import React, { useEffect } from "react"
 import { useStore } from "react-redux"
-import { Ctx } from "../../commen/context"
-import { FilterCatButton, FilterDogButton, FilterFemaleButton, FilterMaleButton, FilterNoneButton, } from "../../component/Icons"
-import { replaceAnimals, setFilter } from "../../redux/aniReducers"
+import { replaceAnimals } from "../../redux/animal"
 import { useGetAnimalsDataQuery } from "../../service/animalsapi"
-import { TestN } from "../../testcomponent/TestComponent"
-import { Animal } from "../../types"
 import AnimalViewer from "./AnimalViewer"
 import { Filter } from "./Filter"
 
 
-const kinds = ["狗", "貓", "all"]
-const gender = ["公", "母", "all"]
-const olds = ["幼齡", "成年", "all"]
+// const kinds = ["狗", "貓", "all"]
+// const gender = ["公", "母", "all"]
+// const olds = ["幼齡", "成年", "all"]
 
 
 //FIXME:取消左側區域的scrollbar
@@ -31,6 +27,7 @@ export const Pair = () => {
     // localStorage.setItem("animals-home",JSON.stringify(data))
   }
 
+  
 
   //for testing 
   // const testData = localStorage.getItem("animals-home")
@@ -59,3 +56,8 @@ export const Pair = () => {
 
 
 
+function calculateDaysBetweenDates(date1: Date, date2: Date) {
+  const oneDay = 1000 * 60 * 60 * 24;
+  const differenceMs = Math.abs(date1.getTime() - date2.getTime());
+  return Math.round(differenceMs / oneDay);
+}

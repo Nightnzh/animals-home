@@ -1,5 +1,4 @@
 import { Animal } from "../types";
-import { SHOW_ALL } from "./actions";
 
 
 

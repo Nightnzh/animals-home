@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Image, VStack, Text, HStack, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import { Animal } from "../../types";
-import { AnimalModal } from "./AnimalInfoModal";
+import { AnimalModal } from "../../component/AnimalInfoModal";
 
 
 

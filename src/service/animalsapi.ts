@@ -32,3 +32,6 @@ export const animalsApiSlice = createApi({
 
 
 export const { useGetAnimalsDataQuery  } = animalsApiSlice
+
+
+export type AnimalApiRootState =  ReturnType<typeof animalsApiSlice.reducer>
