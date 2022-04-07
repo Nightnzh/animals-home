@@ -20,7 +20,6 @@ export const AnimalModal = ({
   const fz24 = "24"
   const fz20 = "20"
   const fz16 = "16"
-  const fz12 = "12"
   const bgWhite = "white"
 
   return (
@@ -89,7 +88,7 @@ export const AnimalModal = ({
                   <Text>{animal.shelter_tel}</Text><br />
                   <Text>{animal.shelter_address}</Text><br />
                   <Text>
-                    本站動物皆採現場互動面談後評估能否認養,不接受系統上的預約。
+                    {animal.animal_remark}
                   </Text>
                 </Box>
               </Flex>

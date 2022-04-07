@@ -1,4 +1,4 @@
-import { firebaseApp, firestore } from "../firebase/firebaseconfig"
+import { firebaseApp } from "../firebase/firebaseconfig"
 import { store } from "./store"
 import { createFirestoreInstance } from 'redux-firestore' // <- needed if using firestore
 import { Animal } from "../types"

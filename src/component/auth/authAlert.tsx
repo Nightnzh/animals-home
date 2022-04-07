@@ -6,13 +6,14 @@ import {
   VStack,
   Text,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 
-import React, { useRef, useState } from "react";
-import { actionTypes, isEmpty, isLoaded, useFirebase } from "react-redux-firebase";
+import { useState } from "react";
+import { useFirebase } from "react-redux-firebase";
 // import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { AppDispatch, StoreState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { StoreState } from "../../redux/store";
 import firebase from 'firebase'
 
 
@@ -22,7 +23,13 @@ export const AuthAlert = () => {
 
   const firebasee = useFirebase();
   // const auth = useSelector((state: StoreRootState) => state.firebase.auth)
-  const auth = useSelector((state : StoreState) => state.firebase.auth)
+  const auth = useSelector((state: StoreState) => state.firebase.auth)
+
+  const toast = useToast()
+
+  const { isOpen, onClose, onOpen, onToggle } = useDisclosure();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   function loginWithGoogle() {
 
@@ -30,13 +37,27 @@ export const AuthAlert = () => {
 
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-    firebasee.auth().signInWithPopup(googleAuthProvider).finally(() =>{ setIsLoading(false) })
+    firebasee.auth().signInWithPopup(googleAuthProvider)
+      .then(() => {
+        toast({
+          status: "success",
+          description: "Login success."
+        })
+      })
+      .catch(e => {
+        toast({
+          status: "error",
+          description: "Login error."
+        })
+      })
+      .finally(() => {
+        setIsLoading(false);
+        onClose()
+      })
 
   }
 
-  const { isOpen, onClose, onOpen, onToggle } = useDisclosure();
 
-  const [isLoading, setIsLoading] = useState(false);
 
 
   return (
@@ -66,8 +87,8 @@ export const AuthAlert = () => {
         </ModalContent>
       </Modal>
 
-      {auth.isEmpty ? <Button onClick={onToggle}>Login</Button> : 
-       <Button onClick={() => { firebasee.logout()}}>{auth.displayName} : Logout</Button>
+      {auth.isEmpty ? <Button onClick={onToggle}>Login</Button> :
+        <Button onClick={() => { firebasee.logout() }}>{auth.displayName} : Logout</Button>
       }
     </>
   )

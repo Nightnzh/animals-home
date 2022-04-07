@@ -16,31 +16,11 @@ import { Provider } from "react-redux"
 import { store } from "./redux/store"
 import { ReactReduxFirebaseProvider } from "react-redux-firebase"
 import { rrfProps } from "./redux/firebase"
+import { myTheme } from "./theme"
 
 
 //chakra costom theme
-const myTheme = extendTheme(
-  {
-    semanticTokens: {
-      colors: {
-        fillColor: "#fda098", //not use
-        bgColor: "#f7f7f7",
-      }
-    },
-    components: {
-      Container: {
-        baseStyle: {
-          maxW: "container.xl"
-        }
-      },
-      Link: {
-        baseStyle: {
-          color: "#fda098"
-        }
-      },
-    }
-  }
-)
+
 
 
 export const App = () => {

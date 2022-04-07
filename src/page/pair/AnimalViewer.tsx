@@ -1,6 +1,6 @@
 
-import { Center, Text, Image, Box, Button, IconButton, Flex, useDisclosure, VStack, HStack, } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import { Text, Image, Box, Button, IconButton, Flex, useDisclosure, HStack, } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
 import { Animal } from "../../types";
@@ -14,8 +14,6 @@ import maleIcon from "../../asset/male.png"
 import feMateIcon from "../../asset/female.png"
 // import { motion } from 'framer-motion'
 
-import caterror from "../../asset/caterror.png"
-import dogerror from "../../asset/dogerror.png"
 import { ErrorImg } from "./ErrorImg";
 import { AnimalModal } from "../../component/AnimalInfoModal";
 import { AnimalSmallCard } from "./AmimalSmallCard";
@@ -50,11 +48,11 @@ const mapStateToProps = (state: StoreState) => {
     if (filter.gender !== "none")
       temp = temp.filter(value => filter.gender === value.animal_sex)
 
-    if (filter.age != "none" && filter.age === "ADULT") {
+    if (filter.age !== "none" && filter.age === "ADULT") {
       temp = temp.filter(value => value.animal_age !== "CHILD")
     }
 
-    if (filter.age != "none" && filter.age === "CHILD") {
+    if (filter.age !== "none" && filter.age === "CHILD") {
       temp = temp.filter(value => value.animal_age === "CHILD")
     }
 
@@ -212,7 +210,7 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
   const border = ""
   const rounded = "40px"
 
-  console.log(animal);
+  // console.log(animal);
 
   if (animal === undefined) {
     return (
@@ -247,6 +245,8 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
             alt={animal.animal_id.toString()}
             fallback={<ErrorImg kind={animal.animal_kind} />}
             onError={(e) => console.log(e)}
+            loading="eager"
+            
           />
           <IconButton aria-label={""}
             position="absolute"

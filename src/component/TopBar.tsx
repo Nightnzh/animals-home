@@ -1,21 +1,34 @@
-import { Box, Center, Container, Flex, Image, Link, Text } from "@chakra-ui/react"
+import { Avatar, Box, Center, Container, Flex, HStack, Image, Link, Text } from "@chakra-ui/react"
 import headerLogo from "../asset/header_logo.svg"
 import React, { ReactElement, useContext } from "react"
 import { Ctx } from "../commen/context"
 import { Link as Linker, useLocation } from "react-router-dom"
+import { AuthAlert } from "./auth/authAlert"
+import { useSelector } from "react-redux"
+import { StoreState } from "../redux/store"
 // import { ColorModeSwitcher } from "../ColorModeSwitcher"
 
 
 export const AppBar = () => {
 
   const ctx = useContext(Ctx)
+  const auth = useSelector((state: StoreState) => state.firebase.auth)
+  const location = useLocation()
 
   return (
-    <Box p="2" position="fixed"  top="0" w="100%" boxShadow="xl" h="60px" zIndex={"1000"} bgColor="#FFF">
+    <Box p="2" position="fixed" top="0" w="100%" boxShadow="xl" h="60px" zIndex={"1000"} bgColor="#FFF">
       <Container >
         <Flex justifyContent="space-between" py="1">
           <Center>
-            <Image h="10" src={headerLogo} alt="header-logo"></Image>
+            {
+              !auth.isEmpty && location.pathname === "/send" ?
+                <HStack gap={"8px"}>
+                  <Avatar src={auth.photoURL!!} boxSize="40px" />
+                  <Text fontWeight={"bold"}>{auth.displayName}</Text>
+                </HStack>
+                :
+                <Image h="10" src={headerLogo} alt="header-logo" />
+            }
           </Center>
           <Center>
             {ctx.routes.map(value => <LinkItem key={value.tit}
@@ -24,6 +37,7 @@ export const AppBar = () => {
               alt={null} />)
             }
             {/* <ColorModeSwitcher /> */}
+            <AuthAlert />
           </Center>
         </Flex>
       </Container>

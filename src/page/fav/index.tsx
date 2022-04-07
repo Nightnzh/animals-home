@@ -1,5 +1,4 @@
-import { Box, Center, Container, VStack, Image, Flex, Text, Icon, Wrap, Alert, useToast } from "@chakra-ui/react";
-import React from "react";
+import { Box, Center, Container, VStack, Image, Flex, Text, Wrap, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { isLoaded, useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { StoreState } from "../../redux/store";
@@ -7,8 +6,6 @@ import { Animal } from "../../types";
 
 import caterrimg from "../../asset/caterror.png"
 import dogerrrimg from "../../asset/dogerror.png"
-import { iconFemale, iconMale } from "../../component/AnimalInfoModal";
-import { stringify } from "querystring";
 
 
 export const Fav = () => {
@@ -63,7 +60,7 @@ const FavAnis = () => {
 
   const aniFavData = useSelector((state: StoreState) => state.firestore.ordered.favs)
 
-  console.log(aniFavData);
+  // console.log(aniFavData);
 
   return (
     <Flex
@@ -72,7 +69,6 @@ const FavAnis = () => {
       // alignItems="center"
       justifyContent="center"
     >
-      {/* {JSON.stringify(aniFavData)} */}
 
       {
         isLoaded(aniFavData) ?
@@ -109,7 +105,7 @@ const FavAniCard = ({ ani }: FavAniCardProps) => {
       .doc(ani.animal_id.toString())
       .delete()
       .then(() => {
-        throw "test"
+        // throw "test"
         toast({
           title: "Delete Success",
           status: "success",
@@ -141,7 +137,7 @@ const FavAniCard = ({ ani }: FavAniCardProps) => {
     // maxW="60"
     >
       <Wrap position="relative" >
-        <Image src={ani.album_file} w="40" h="40"
+        <Image loading="eager" src={ani.album_file} w="40" h="40"
           objectFit={"cover"}
           fallback={<Image src={errimg} w="40" h="40" objectFit={"contain"} rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} />}
           rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} >

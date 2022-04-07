@@ -6,7 +6,10 @@
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-import  firebase from "firebase"
+import  firebase from "firebase/app"
+import "firebase/firestore"
+import "firebase/auth"
+import "firebase/analytics"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBt6v-tCbxwljSsxXPvp8KhBV0v1kSlQZE",
@@ -24,7 +27,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
-export const firestore = firebaseApp;
+// export const firestore = firebaseApp;
+export const storage = firebase.storage()
 // console.log("🚀 ~ file: firebaseconfig.ts ~ line 32 ~ firestore", firestore)
 
 // console.log("🚀 ~ file: firebaseconfig.ts ~ line 35 ~ auth", auth)
