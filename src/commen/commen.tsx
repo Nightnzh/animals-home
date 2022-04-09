@@ -21,13 +21,13 @@ export const routes = [
     tit: "收藏",
     component: <Fav/>
   },
-  {
-    path: "/type",
-    icon: TypeIcon,
-    iconObj: TypeIcon,
-    tit: "主題",
-    component: <></>
-  },
+  // {
+  //   path: "/type",
+  //   icon: TypeIcon,
+  //   iconObj: TypeIcon,
+  //   tit: "主題",
+  //   component: <></>
+  // },
   {
     path: "/send",
     icon: LetterIcon,

@@ -7,7 +7,7 @@ import { AnimalModal } from "../../component/AnimalInfoModal";
 
 type AnimalSmallViewerProps = {
   animal: Animal,
-  onClick: React.MouseEventHandler
+  // onClick: React.MouseEventHandler
 }
 
 
@@ -21,17 +21,20 @@ export const AnimalSmallCard = ({ animal }: AnimalSmallViewerProps) => {
   return (
     <>
       <Flex onClick={onOpen}
-        alignItems="center"
+        // alignItems="center"
+        // justifyContent={"center"}
         background="#fff"
         rounded={"20px"}
         p="16px"
         px="32px"
         boxShadow={"xl"}
         cursor="pointer"
-        _hover={{
-          opacity : "1.3"
-        }}
-        >
+        // _hover={{
+        //   opacity : "1.3"
+        // }}
+        // height={"-webkit-fit-content"}
+        flex={1}
+      >
         <Avatar src={animal.album_file} mr="16px" border={"1px solid #888"} >
         </Avatar>
         <VStack textAlign={"start"}>
@@ -45,10 +48,10 @@ export const AnimalSmallCard = ({ animal }: AnimalSmallViewerProps) => {
         </VStack>
       </Flex>
 
-      <AnimalModal 
+      <AnimalModal
         size="full"
         animal={animal}
-        onClose={onClose} children={undefined} isOpen={isOpen}        
+        onClose={onClose} children={undefined} isOpen={isOpen}
       />
 
     </>

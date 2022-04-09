@@ -38,7 +38,7 @@ export const AnimalModal = ({
           />
           <ModalBody p="16px" d="flex" justifyContent="center" alignItems="center" bgColor="#f7f7f7">
 
-            <Flex border={bo} h="auto" w={"60vw"} minW="400px" maxW={"1200px"} gap="16px" flexDirection={['column', 'column', 'row']}>
+            <Flex border={bo} h="auto" w={"60vw"} minW="300px" maxW={"1200px"} gap="16px" flexDirection={['column', 'column', 'column','row']}>
               <Box flex="1" d="flex" alignItems="center" justifyContent="center" >
                 <Image
                   src={animal.album_file}
@@ -64,7 +64,7 @@ export const AnimalModal = ({
                   </Box>
                   <Image src={favIcon} boxSize="20" onClick={()=>{ }} />
                 </Flex >
-                <Flex w="100%" rounded={rounded} bgColor={bgWhite} px="12" py="4">
+                <Flex  rounded={rounded} bgColor={bgWhite} px="12" py="4">
                   <Box>
                     <Text fontSize={fz24} fontWeight="bold">{animal.animal_subid}</Text>
                     <Text color={"#555"}>{animal.cDate}</Text>
@@ -84,7 +84,7 @@ export const AnimalModal = ({
                     <Text fontWeight={"500"}>{animal.animal_colour}</Text>
                   </VStack>
                 </Flex>
-                <Box rounded={rounded} bgColor={bgWhite} w="100%" px="12" py="4" >
+                <Box rounded={rounded} bgColor={bgWhite}  px="12" py="4" >
                   <Text>{animal.shelter_tel}</Text><br />
                   <Text>{animal.shelter_address}</Text><br />
                   <Text>

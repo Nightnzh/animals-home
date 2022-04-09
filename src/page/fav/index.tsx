@@ -50,9 +50,7 @@ const FavAnis = () => {
   useFirestoreConnect([
     {
       collection: `fav/${authId}/favorites`,
-      // collection : `favorites`
       storeAs: favs,
-
     },
 
   ])

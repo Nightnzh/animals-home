@@ -23,13 +23,15 @@ export interface Profile {
 
 export interface SendLetter {
   ani : Animal,
-  sender : "string",
-  letterCDate : "string"
+  senderName : string,
+  senderId: string,
+  aniName : string,
+  letterCDate : string
 }
 
 export interface MySchema {
   favs : Animal[],
-  // sendLetter : SendLetter
+  sendLetter : SendLetter
 }
 
 

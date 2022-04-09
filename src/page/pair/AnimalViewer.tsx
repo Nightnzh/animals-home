@@ -1,11 +1,10 @@
 
-import { Text, Image, Box, Button, IconButton, Flex, useDisclosure, HStack, } from "@chakra-ui/react";
+import { Text, Image, Box, Button, IconButton, Flex, useDisclosure, HStack, Container, } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
 import { Animal } from "../../types";
 
-import loadingImg from "../../asset/header_logo.svg"
 // import loadingGif from "../../asset/loading__.gif"
 import infoIcon from "../../asset/ii.png"
 import favIcon from "../../asset/fav.png"
@@ -33,8 +32,6 @@ import { useFirestore } from "react-redux-firebase";
 const mapStateToProps = (state: StoreState) => {
 
   const filter = state.animals.filter
-
-
   // console.log(state.animals.animalsData.map(value => value.animal_age).sort());
 
   // filter fun
@@ -96,10 +93,7 @@ const connector = connect(mapStateToProps)
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 
-//FIXME: re-render 會有暫存造成 [] 超出範圍 => 報錯
-//要確保這裡不會超出 [] 的範圍
 const PairAnimalViewer = (props: PropsFromRedux) => {
-
 
   const [ani, setAni] = useState<Animal | undefined>(undefined)
   const randomFn = () => {
@@ -123,7 +117,6 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
 
   const addFavAni = (ani: Animal) => {
 
-    let isErr = false
 
     if (authId === undefined) {
       alert("auth is undefined")
@@ -137,47 +130,46 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
       .doc(ani.animal_id.toString())
       .set(ani)
       .catch(e => {
-        isErr = true
         console.log(e);
         alert(e)
       }).finally(() => {
-        if (!isErr) {
-          randomFn()
-        }
+        randomFn()
       })
-
-
   }
 
 
   return (
     <>
-      <Flex
+      <Container
+        
         // border="1px"
         h="100%"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent={"space-around"}>
+        // flexDirection="column"
+        
+        // alignItems="center"
+        // justifyContent={"space-around"}
+        >
         {/* {props.singleAnimal === undefined ? <Loading/> : props.singleAnimal.animal_colour} */}
         {/* <Text>{randomNum}</Text> */}
         <AnimalCard
+
           onXXClick={randomFn}
           onFavClick={addFavAni}
           onInfoClick={onOpen}
           animal={ani!!} />
-        <HStack>
+        <Flex  gap={"16px"} flexWrap="wrap" justifyContent={"center"} >
           {
-            props.noFilterRandomDatas.length != 0 && props.noFilterRandomDatas != undefined ?
+            props.noFilterRandomDatas.length !== 0 && props.noFilterRandomDatas !== undefined ?
               props.noFilterRandomDatas.map(value => {
                 return (
-                  <AnimalSmallCard key={value.animal_id} animal={value} onClick={() => { }} />
+                  <AnimalSmallCard key={value.animal_id} animal={value}  />
                 )
               })
               : <></>
           }
-          <Button onClick={randomFn}>Random</Button>
-        </HStack>
-      </Flex>
+          {/* <Button onClick={randomFn}>Random</Button> */}
+        </Flex>
+      </Container>
 
 
       {ani !== undefined ?
@@ -205,8 +197,8 @@ interface AnimalCardProps {
 const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardProps) => {
 
 
-  const width = "400px"
-  const height = "400px"
+  const width = ["300px","400px","500px"]
+  const height = "300px"
   const border = ""
   const rounded = "40px"
 
@@ -214,7 +206,7 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
 
   if (animal === undefined) {
     return (
-      <Box border={border} boxSizing="border-box" width="500px" h="500px" position="relative" >
+      <Box flex={7} border={border} boxSizing="border-box" width="100%" height={"400px"} position="relative"  >
         <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(20deg)" zIndex="2" bgColor="#FFF" />
         <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(10deg)" zIndex="1" bgColor="#FFF" />
         <Text
@@ -234,18 +226,21 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
   }
 
   return (
-    <Box border={border} boxSizing="border-box" width="500px" h="500px" position="relative" >
+    <Box flex={7}  border={border} boxSizing="border-box" height={"70vh"}   position="relative" >
       <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(20deg)" zIndex="2" bgColor="#FFF" />
       <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(10deg)" zIndex="1" bgColor="#FFF" />
-      <Box border="1px solid rgba(0,0,0,0.3)" boxShadow="2xl" w={width} height={"auto"} minH="100px" rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(-5deg)" zIndex="3" bgColor="#FFF" p="12px">
+      <Box border="1px solid rgba(0,0,0,0.3)" boxShadow="2xl" w={width}  minH="100px" rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(-5deg)" zIndex="3" bgColor="#FFF" p="12px">
         {/* ImageAbout */}
         <Box>
           <Image src={animal?.album_file}
             rounded={rounded} w="100%"
             alt={animal.animal_id.toString()}
+            maxH="400px"
+            objectFit={"cover"}
+            objectPosition={"center"}
             fallback={<ErrorImg kind={animal.animal_kind} />}
             onError={(e) => console.log(e)}
-            loading="eager"
+            // loading="eager"
             
           />
           <IconButton aria-label={""}
@@ -283,17 +278,6 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
     </Box>
   )
 }
-
-//TODO: change loading to asset/re-loading.json 毛線球
-const Loading = () => {
-  return (
-    <Image src={loadingImg} />
-  )
-}
-
-
-
-
 
 
 export default connector(PairAnimalViewer)

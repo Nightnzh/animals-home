@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 
-//上傳寵物相片並預覽,單尚未上傳至sever
+//上傳寵物相片並預覽,但尚未上傳至sever
+//TODO:改成只上傳一張並限制片大小！！
 
 type MyFile = {
   preview: string
