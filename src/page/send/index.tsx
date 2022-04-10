@@ -9,9 +9,10 @@ import { SendLetter } from "../../redux/firebase";
 import { StoreState } from "../../redux/store";
 import { Animal } from "../../types";
 import { kind_colors } from "../pair/Filter";
-import { catSvg, dogSvg, femaleSvg, maleSvg } from "./icon";
+import { catSvg, dogSvg, femaleSvg, maleSvg } from "../../component/Icons";
 import { ImgFilePreview } from "./inputImg";
 import { RadioCard } from "./radio";
+import { LetterItem } from "./LetterItem";
 
 
 export const Send = () => {
@@ -24,7 +25,8 @@ export const Send = () => {
   ])
 
   const sendData = useSelector((state: StoreState) => state.firestore.ordered.sendLetter)
-  const [isMySendLetter, setIsMySendLetter] = useState(false)
+
+
 
   return (
     <Box marginTop="60px"
@@ -43,7 +45,7 @@ export const Send = () => {
         {/* 顯示 */}
         <Flex flexWrap={"wrap"} justifyContent={"center"} gap="32px">
           {isLoaded(sendData) && sendData.map((value, index) => (
-            <LetterItem key={index} sendLetter={JSON.parse(JSON.stringify(value))} />
+            <LetterItem key={index} docId={value.id.toString()} sendLetter={JSON.parse(JSON.stringify(value))} />
           ))}
         </Flex>
         <MyDrawer />
@@ -74,11 +76,15 @@ const MyDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef(null)
 
-  const authisEmpty = useSelector((state: StoreState) => state.firebase.auth.isEmpty)
+  const toast = useToast()
+  const auth = useSelector((state: StoreState) => state.firebase.auth)
 
   return (
     <>
-      <AddLetter _hover={undefined} bg={"rgba(0,0,0,0)"}  position={"fixed"} bottom="20px" right={"20px"} onClick={() => { if (!authisEmpty) { onOpen(); } else { alert("請先登入"); } }} aria-label={""} />
+      <AddLetter _hover={undefined} bg={"rgba(0,0,0,0)"}
+        position={"fixed"}
+        bottom="20px"
+        right={"20px"} onClick={() => { if (!auth.isEmpty) { onOpen(); } else { toast({ status: "warning", description: "請先登入", position: "top" }); } }} aria-label={""} />
       <Drawer
         isOpen={isOpen}
         placement="right"
@@ -182,14 +188,6 @@ const MyForm = ({ onSuccess }: SuccessProps) => {
       address === "" ||
       area === ""
     ) {
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ area", area)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ address", address)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ tell", tell)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ color", color)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ age", age)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ sex", sex)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ kind", kind)
-      // console.log("🚀 ~ file: index.tsx ~ line 185 ~ handleSubmit ~ imgFile", imgFile)
       alert("有資料未填寫")
       return
     }
@@ -248,7 +246,7 @@ const MyForm = ({ onSuccess }: SuccessProps) => {
         aniName: name,
         letterCDate: dateTimeString
       }
-      const t2 = await fireStroe.collection("sendLetter").add(sendLetter)
+      await fireStroe.collection("sendLetter").add(sendLetter)
       onSuccess()
       toast({
         status: "success",
@@ -438,35 +436,9 @@ const AgeSelect = ({ value, setValue }: SetValueProps) => {
 
 
 interface LetterItemProps {
-  sendLetter: SendLetter
+  sendLetter: SendLetter,
+  docId : string,
 }
 
-const LetterItem = ({ sendLetter }: LetterItemProps) => {
-
-  //此參數用於判斷 item 是否為自己發的！
-  const authId = useSelector((state: StoreState) => state.firebase.auth.uid)
-
-
-  return (
-    <Flex flexDirection={"column"} gap="16px" pb={"16px"} flex={1} minW="200px" maxW={"300px"} bg="#FFF" rounded={"20px"} boxShadow="xl" >
-      <Image src={sendLetter.ani.album_file} objectFit={"cover"} fallback={<Center w="100%" h="200px" ><Spinner /></Center>} rounded="20px" w="100%" />
-      <Box gap={"8px"} px="8px">
-        <Text>{`${sendLetter.ani.animal_age === "CHILD" ? "幼齡" : "成年"}`}</Text>
-        <Flex>
-          <Text>性別：</Text>
-          <Spacer></Spacer>
-          {sendLetter.ani.animal_sex === "M" ? maleSvg : femaleSvg}
-        </Flex>
-        <Flex>
-          <Text>建立時間:</Text>
-          <Spacer />
-          <Text>{sendLetter.ani.cDate}</Text>
-        </Flex>
-      </Box>
-
-    </Flex>
-  )
-
-}
 
 

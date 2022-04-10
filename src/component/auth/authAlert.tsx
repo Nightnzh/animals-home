@@ -14,7 +14,8 @@ import { useFirebase } from "react-redux-firebase";
 // import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import { FaAlignCenter } from "react-icons/fa";
 
 
 
@@ -62,7 +63,6 @@ export const AuthAlert = () => {
 
   return (
     <>
-
       <Modal isOpen={isOpen} onClose={onClose} isCentered >
         <ModalOverlay></ModalOverlay>
         <ModalContent p="32px">
@@ -87,12 +87,17 @@ export const AuthAlert = () => {
         </ModalContent>
       </Modal>
 
-      {auth.isEmpty ? <Button onClick={onToggle}>Login</Button> :
-        <Button onClick={() => { firebasee.logout() }}>{auth.displayName} : Logout</Button>
+      {auth.isEmpty ?
+        <Button variant={"outline"} colorScheme="teal" onClick={onToggle}>LOGIN</Button>
+        :
+        <Button rightIcon={<FaAlignCenter />} variant={"solid"} colorScheme="teal" onClick={() => { firebasee.logout() }}>{auth.displayName}(Logout)</Button>
       }
+      {/* {auth.isEmpty && <MenuItem onClick={onOpen} icon={<FaAccusoft/>}>Login</MenuItem>}  */}
+      {/* {!auth.isEmpty && <MenuItem onClick={()=> firebasee.logout()} icon={<FaSignOutAlt/>}>Logout</MenuItem>} */}
     </>
   )
 }
+
 
 
 

@@ -42,8 +42,12 @@ export const Pair = () => {
       <Flex height="calc(100vh - 60px)" >
         <Box bgColor="#f9f9f9"  >
           <Center h="100%" >
-            { isSmallThan700 ? <DrawerFilter/> :
-            <FilterSection />}
+            {
+              isSmallThan700 ?
+                <DrawerFilter />
+                :
+                <FilterSection />
+            }
           </Center>
         </Box>
         <Box flex={1} boxShadow="inner" bgColor="#f7f7f7" position={"relative"}>
@@ -75,13 +79,13 @@ const DrawerFilter = () => {
           fill="currentColor" />
         </svg>
       </IconButton>
-      <Drawer isOpen={isOpen} onClose={onClose}  placement='bottom' size={"full"} >
-        
-        <DrawerContent >
-        <DrawerCloseButton />
+      <Drawer isOpen={isOpen} onClose={onClose} placement='bottom' size={"full"} >
+
+        <DrawerContent bg={"#f7f7f7"}>
+          <DrawerCloseButton />
           <Center>
 
-          <Filter controlClose={onClose}/>
+            <Filter controlClose={onClose} />
           </Center>
         </DrawerContent>
       </Drawer>

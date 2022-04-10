@@ -2335,6 +2335,26 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@js-joda/core@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@js-joda/core/-/core-5.2.0.tgz#fcebb14cffbf25adaaeec20d4579530e896ecd4a"
+  integrity sha512-0OriPYIaMLB3XiLQMe0BXKVIqeriTn3H7JMOzTsHEtt7Zqq+TetCu97KnAhU3ckiQZKBxfZshft+H1OC4D1lXw==
+
+"@js-joda/locale@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@js-joda/locale/-/locale-4.7.0.tgz#80b278b26ca98b5642d901f2301f62fd4b7bf603"
+  integrity sha512-B4dTVwX7PJv/nTz9bkyj5W/eywlXuoRSE0CdtMBixqWoiP1xtRwY/diuPLfsw0Bn6i1qsQGRrWW3RZFkV2vjvQ==
+
+"@js-joda/locale_zh@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@js-joda/locale_zh/-/locale_zh-4.7.0.tgz#4d2cddce1ff173896ab837298278f026139308f0"
+  integrity sha512-LEo0q2Lbs9o5zq7d0+emgxTxGo8QySnRFeaRIHx8J4TbEGQS34OBsTt3lx4MBxQDSrBXdZhWsRK5/rBX+Lx8lA==
+
+"@js-joda/timezone@^2.12.0":
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/@js-joda/timezone/-/timezone-2.12.0.tgz#a0b89ec5b4b2a53c0837f0308503ba5ecc8abc5f"
+  integrity sha512-1bpkGU3bh80wqR1TCpMXpgpwVs7RpIkYmq75JIGl+NRFIKEhE3qHYBtS4EFSAkVxCTZSj6b9dolr8ijq36GJEQ==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -6793,7 +6813,7 @@ jest@^27.4.3:
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
 js-yaml@^3.13.1:
@@ -7353,7 +7373,7 @@ nwsapi@^2.2.0:
 
 object-assign@^4.1.1:
   version "4.1.1"
-  resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
 
 object-hash@^2.2.0:
@@ -8651,7 +8671,7 @@ react@^16.5.2:
 
 react@^17.0.2:
   version "17.0.2"
-  resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
   dependencies:
     loose-envify "^1.1.0"
