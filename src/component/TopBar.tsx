@@ -1,15 +1,14 @@
-import { Avatar, Box, Button, Center, Container, Flex, HStack, IconButton, Image, Link, Menu, MenuButton, MenuItem, MenuList, Spacer, Text } from "@chakra-ui/react"
+import { Avatar, Box, Button, Center, Container, Flex, HStack, Image, Link, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react"
 import headerLogo from "../asset/header_logo.svg"
 import { useContext } from "react"
 import { Ctx } from "../commen/context"
 import { Link as Linker, useLocation } from "react-router-dom"
 import { AuthAlert } from "./auth/authAlert"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { StoreState } from "../redux/store"
-import { FaAccusoft, FaBaby, FaChevronDown, FaHamburger, FaSignOutAlt, FaStumbleupon, FaUserMinus } from "react-icons/fa"
+import { FaUserMinus } from "react-icons/fa"
 import { useFirebase } from "react-redux-firebase"
 import { ColorModeSwitcher } from "../ColorModeSwitcher"
-// import { ColorModeSwitcher } from "../ColorModeSwitcher"
 
 
 export const AppBar = () => {
@@ -47,6 +46,7 @@ export const AppBar = () => {
 
 
             <AuthAlert />
+            {/* <ColorModeSwitcher/> */}
             {/* <MyMenu /> */}
           </Center>
 

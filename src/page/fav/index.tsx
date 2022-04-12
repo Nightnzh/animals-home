@@ -1,4 +1,4 @@
-import { Box, Center, Container, VStack, Image, Flex, Text, Wrap, useToast } from "@chakra-ui/react";
+import { Box, Center, Container, VStack, Image, Flex, Text, Wrap, useToast, useDisclosure } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { isLoaded, useFirestore, useFirestoreConnect } from "react-redux-firebase";
 import { StoreState } from "../../redux/store";
@@ -7,6 +7,7 @@ import { Animal } from "../../types";
 import caterrimg from "../../asset/caterror.png"
 import dogerrrimg from "../../asset/dogerror.png"
 import { fmicon, micon, xxicon } from "../../component/Icons";
+import { AnimalModal } from "../../component/AnimalInfoModal";
 
 
 export const Fav = () => {
@@ -17,7 +18,7 @@ export const Fav = () => {
   if (auth.isEmpty) {
 
     return (
-      <Center h="calc(100vh - 60px)">
+      <Center fontSize={"2xl"} h="calc(100vh - 60px)">
         請登入
       </Center>
     )
@@ -33,6 +34,7 @@ export const Fav = () => {
       overflowY={"scroll"}
     >
       <Container>
+        <Text textAlign={["start", "center"]} fontSize={"2xl"} pb={"32px"}>用戶收藏</Text>
         {
           <FavAnis />
         }
@@ -69,6 +71,8 @@ const FavAnis = () => {
       justifyContent="center"
     >
 
+      { 
+        isLoaded(aniFavData) && aniFavData.length === 0 ? <Center fontSize={"2xl"}>目前沒有收藏</Center> : <></>}
       {
         isLoaded(aniFavData) ?
           aniFavData.map((ani) => {
@@ -93,6 +97,7 @@ const FavAniCard = ({ ani }: FavAniCardProps) => {
   const firestore = useFirestore()
   const authID = useSelector((state: StoreState) => state.firebase.auth.uid)
 
+  const { isOpen, onOpen ,onClose } = useDisclosure()
 
   const toast = useToast()
 
@@ -124,35 +129,36 @@ const FavAniCard = ({ ani }: FavAniCardProps) => {
   }
 
   return (
+    <>
+      <VStack
+        onClick={onOpen}
+        rounded={"30"}
+        p={"16px"}
+        gap={2}
+        bgColor="#fff"
+        shadow={"2xl"}
+        cursor="pointer"
+      // maxW="60"
+      >
+        <Wrap position="relative" >
+          <Image src={ani.album_file}  w={["100%","400px"]} h="400px"
+            objectFit={"cover"}
+            fallback={<Image src={errimg} w={["100%","400px"]} h="400px" objectFit={"contain"} rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} />}
+            rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} >
+          </Image>
+          <Box position={"absolute"} top="0px" right={"0px"} onClick={handleDelete} >
+            {xxicon}
+          </Box>
+        </Wrap>
 
-    <VStack
-
-      rounded={"30"}
-      p={"16px"}
-      gap={2}
-      bgColor="#fff"
-      shadow={"2xl"}
-      cursor="pointer"
-    // maxW="60"
-    >
-      <Wrap position="relative" >
-        <Image  src={ani.album_file} w="40" h="40"
-          objectFit={"cover"}
-          fallback={<Image src={errimg} w="40" h="40" objectFit={"contain"} rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} />}
-          rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} >
-        </Image>
-        <Box position={"absolute"} top="0px" right={"0px"} onClick={handleDelete} >
-          {xxicon}
-        </Box>
-      </Wrap>
-
-      <Flex justifyContent="space-between" w="100%" alignItems={"center"} >
-        <Text fontWeight={"bold"} fontSize="20px">{ani.animal_id}</Text>
-        {sexicon}
-      </Flex>
-      <Text color={"#555"} fontSize={"16px"} mb={"16px"} noOfLines={1} maxW="40">{ani.shelter_address}</Text>
-    </VStack>
-
+        <Flex justifyContent="space-between" w="100%" alignItems={"center"} >
+          <Text fontWeight={"bold"} fontSize="20px">{ani.animal_id}</Text>
+          {sexicon}
+        </Flex>
+        <Text color={"#555"} w="100%" mb={"16px"} noOfLines={1} >{ani.animal_place}</Text>
+      </VStack>
+      <AnimalModal animal={ani} children={undefined} isOpen={isOpen} onClose={onClose} size={"full"} />
+    </>
   )
 }
 

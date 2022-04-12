@@ -1,5 +1,6 @@
-import { Box, Button, Center, CloseButton, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, Flex, IconButton, useBreakpoint, useDisclosure, useMediaQuery } from "@chakra-ui/react"
-import React, { useEffect } from "react"
+import { Box, Center, CircularProgress, Drawer, DrawerCloseButton, DrawerContent, Flex, IconButton, Spinner, useDisclosure, useMediaQuery } from "@chakra-ui/react"
+import { useEffect } from "react"
+import { FaTruckLoading } from "react-icons/fa"
 import { useStore } from "react-redux"
 import { replaceAnimals } from "../../redux/animal"
 import { useGetAnimalsDataQuery } from "../../service/animalsapi"
@@ -38,9 +39,10 @@ export const Pair = () => {
   // store.dispatch(replaceAnimals(JSON.parse(testData!!)))
 
   return (
-    <Box pt="60px"  >
-      <Flex height="calc(100vh - 60px)" >
-        <Box bgColor="#f9f9f9"  >
+    <Box mt="60px" height="calc(100vh - 60px)"  bgColor="#f7f7f7" overflowY={"scroll"}>
+      {isLoading || isFetching ? <Center h="100%"><Spinner variant={""}/></Center> : ""}
+      <Flex height={"100%"} overflowY="auto">
+        <Box  bg="#f9f9f9">
           <Center h="100%" >
             {
               isSmallThan700 ?
@@ -50,8 +52,8 @@ export const Pair = () => {
             }
           </Center>
         </Box>
-        <Box flex={1} boxShadow="inner" bgColor="#f7f7f7" position={"relative"}>
-          {isLoading || isFetching ? <Center h="100%">Loading</Center> : ""}
+        <Box flex={1} boxShadow="inner"  position={"relative"}>
+          
           {isSuccess ? <AnimalViewer /> : ""}
           {/* <Button onClick={refetch} position="absolute" right={"50px"} top="50px" >refetch data</Button> */}
         </Box>

@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, ModalProps, Image, Text, VStack, IconButton, useTooltip, useToast } from "@chakra-ui/react";
+import { Box, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, ModalProps, Image, Text, VStack, useToast } from "@chakra-ui/react";
 import { Animal } from "../types";
 import favIcon from "../asset/fav.png"
 import { ErrorImg } from "../page/pair/ErrorImg";
@@ -33,9 +32,11 @@ export const AnimalModal = ({
 
     if (isExisite.exists) {
       toast({
-        status: "warning",
-        description: "已經收藏過了",
+        status: "info",
+        description: "已經在收藏囉～",
         position: "top",
+        duration: 1000,
+        
       })
       return
     }

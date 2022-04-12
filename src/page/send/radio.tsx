@@ -11,6 +11,7 @@ export function RadioCard(props : RadioProps) {
     <Box flex={1} as='label'>
       <input {...input} />
       <Center
+     
         {...checkbox}
         cursor='pointer'
         rounded={"20px"}
@@ -27,6 +28,43 @@ export function RadioCard(props : RadioProps) {
           boxShadow: 'outline',
         }}
         h="50px"
+        // w="72px"
+        px={5}
+        py={3}
+      >
+        {props.children}
+      </Center>
+    </Box>
+  )
+}
+
+export function RadioPlaceCard(props : RadioProps) {
+  const { getInputProps, getCheckboxProps } = useRadio(props)
+
+  const input = getInputProps()
+  const checkbox = getCheckboxProps()
+
+  return (
+    <Box flex={1} as='label'>
+      <input {...input} />
+      <Center
+        {...checkbox}
+        // transition='all 0.5s'
+        cursor='pointer'
+        rounded={"10px"}
+        boxShadow='sm'
+        // color="#FFF"
+        bg="#f0a122"
+        _checked={{
+          bg: '#0070e1',
+          color: 'white',
+          borderColor: '#FFF',
+        }}
+        _focus={{
+          boxShadow: 'outline',
+        }}
+        // h="50px"
+        fontWeight="bold"
         // w="72px"
         px={5}
         py={3}

@@ -1,4 +1,4 @@
-import { Box, Grid, Flex, Switch, Button, ButtonProps, Text, IconButton, Icon, useDisclosure, Show, VisuallyHidden, Fade } from "@chakra-ui/react"
+import { Box, Grid, Button, ButtonProps, Text, IconButton, useDisclosure, Fade } from "@chakra-ui/react"
 import { useState, useContext } from "react"
 import { useStore } from "react-redux"
 import { Ctx } from "../../commen/context"
@@ -14,7 +14,7 @@ export const FilterSection = () => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
   return (
-    <Box pt="60px">
+    <Box >
       <IconButton onClick={onToggle} aria-label={"HamburgerIcon"} position={"fixed"} bottom={"20px"} right={"20px"} zIndex="200" rounded={"100px"} boxSize="50px" colorScheme={"blue"}>
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
           width="30" height="30"
@@ -24,8 +24,8 @@ export const FilterSection = () => {
         </svg>
       </IconButton>
       <Fade in={isOpen} hidden={!isOpen} >
-        <Filter/>
-        
+        <Filter />
+
       </Fade>
 
     </Box>
@@ -57,14 +57,16 @@ const TextBtn = ({ value, text, isSelected, onClick }: TextBtnProps & ButtonProp
     </Button>
   )
 }
- 
+
 
 
 interface FilterProps {
-  controlClose? : () => void
+  controlClose?: () => void
 }
 
-export const Filter = ({ controlClose } : FilterProps) => {
+
+//TODO:模組化
+export const Filter = ({ controlClose }: FilterProps) => {
 
   const store = useStore()
 
@@ -133,13 +135,13 @@ export const Filter = ({ controlClose } : FilterProps) => {
     console.log(filter)
     store.dispatch(setFilter(filter))
     //控制關閉
-    if(controlClose !== undefined){
+    if (controlClose !== undefined) {
       controlClose()
     }
   }
 
   return (
-    <Box px="10" maxH="94vh"  pt="32px" overflowY={"auto"} >
+    <Box px="10" maxH="94vh" pt="32px" overflowY={"auto"} >
       <Text pl="8px" fontWeight="bold">我想找尋</Text>
       <Box>
         <FilterCatButton value="貓" isSelected={isKindSelected("貓")} onClick={handleKindFilter} />

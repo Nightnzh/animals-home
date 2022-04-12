@@ -1,5 +1,5 @@
 
-import { Text, Image, Box, Button, IconButton, Flex, useDisclosure, HStack, Container, } from "@chakra-ui/react";
+import { Text, Image, Box, IconButton, Flex, useDisclosure, Container, } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { connect, ConnectedProps, useSelector } from "react-redux";
 import { StoreState } from "../../redux/store";
@@ -143,7 +143,7 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
       <Container
         
         // border="1px"
-        h="100%"
+        // h="100%"
         // flexDirection="column"
         
         // alignItems="center"

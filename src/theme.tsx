@@ -19,7 +19,7 @@ export const myTheme = extendTheme(
     components: {
       Container: {
         baseStyle: {
-          maxW: "container.xl"
+          maxW: "container.lg"
         }
       },
       Link: {

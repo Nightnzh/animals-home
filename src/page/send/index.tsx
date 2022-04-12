@@ -1,4 +1,4 @@
-import { Box, Button, Container, DrawerBody, DrawerCloseButton, Image, DrawerContent, DrawerHeader, DrawerOverlay, Icon, Drawer, Text, useDisclosure, VStack, ButtonProps, FormControl, useToast, FormLabel, Select, Flex, useRadioGroup, Input, Divider, Textarea, IconButton, IconButtonProps, Spacer, Spinner, Center } from "@chakra-ui/react";
+import { Box, Button, Container, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Icon, Drawer, Text, useDisclosure, FormControl, useToast, FormLabel, Select, Flex, useRadioGroup, Input, Divider, Textarea, IconButton, IconButtonProps } from "@chakra-ui/react";
 import { DateTimeFormatter, LocalDateTime } from "@js-joda/core";
 import '@js-joda/timezone' // Just needs to be imported; registers itself automatically
 import { Locale } from '@js-joda/locale_zh' // Get `Locale` from the prebuilt package of your choice
@@ -33,17 +33,22 @@ export const Send = () => {
       h="calc(100vh - 60px)"
       maxH="calc(100vh - 60px)"
       background="#f7f7f7"
-      position={"relative"}>
-      <Box
+      position={"relative"}
+      overflowY={"scroll"}
+    >
+
+      {/* <Box
         position={"absolute"}
         top={"50px"}
         right={"50px"}>
-        {/* <AuthAlert /> */}
-      </Box>
+        <AuthAlert />
+      </Box> */}
+      <Container my="32px" size={"md"} bg="#f6f6f6" zIndex={"0"} >
+        <Text textAlign={["start", "center"]} fontSize={"2xl"} >所有用戶發的送養文</Text>
 
-      <Container py="32px" bg="#f6f6f6" >
+
         {/* 顯示 */}
-        <Flex flexWrap={"wrap"} justifyContent={"center"} gap="32px">
+        <Flex flexDirection={"column"} justifyContent={"center"} mt="32px" gap="32px">
           {isLoaded(sendData) && sendData.map((value, index) => (
             <LetterItem key={index} docId={value.id.toString()} sendLetter={JSON.parse(JSON.stringify(value))} />
           ))}
@@ -230,12 +235,12 @@ const MyForm = ({ onSuccess }: SuccessProps) => {
         animal_closeddate: "",
         animal_update: "",
         animal_createtime: dateTimeString,
-        shelter_name: "此為平台用戶上傳",
+        shelter_name: "",
         album_file: imgUrl,
         album_update: "",
         cDate: dateTimeString,
-        shelter_address: "此為平台用戶上傳",
-        shelter_tel: "此為平台用戶上傳",
+        shelter_address: "",
+        shelter_tel: tell,
         animal_Variety: ""
       }
 
@@ -256,7 +261,7 @@ const MyForm = ({ onSuccess }: SuccessProps) => {
     catch (e) {
       alert(e)
       toast({
-        status: "success",
+        status: "error",
         description: "上傳失敗"
       })
     } finally {
@@ -434,11 +439,6 @@ const AgeSelect = ({ value, setValue }: SetValueProps) => {
 }
 
 
-
-interface LetterItemProps {
-  sendLetter: SendLetter,
-  docId : string,
-}
 
 
 

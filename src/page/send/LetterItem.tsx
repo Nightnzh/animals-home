@@ -1,4 +1,4 @@
-import { useToast, Box, Center, Spinner, Flex, Spacer, Button, Image, Text, useDisclosure } from "@chakra-ui/react"
+import { useToast, Box, Center, Spinner, Flex, Spacer, Button, Image, Text, useDisclosure, Textarea } from "@chakra-ui/react"
 import { useSelector } from "react-redux"
 import { useFirestore } from "react-redux-firebase"
 import { AnimalModal } from "../../component/AnimalInfoModal"
@@ -14,7 +14,7 @@ interface LetterItemProps {
 export const LetterItem = ({ sendLetter, docId }: LetterItemProps) => {
 
   //此參數用於判斷 item 是否為自己發的！
-  const authId = useSelector((state: StoreState) => state.firebase.auth.uid)
+  // const authId = useSelector((state: StoreState) => state.firebase.auth.uid)
 
   const isMyLetter = useSelector((state: StoreState) => state.firebase.auth.uid === sendLetter.senderId)
 
@@ -39,28 +39,35 @@ export const LetterItem = ({ sendLetter, docId }: LetterItemProps) => {
     })
   }
 
-  const { onToggle, isOpen , onOpen ,onClose} = useDisclosure()
+  const {  isOpen , onOpen ,onClose} = useDisclosure()
 
 
   return (
     <>
-      <Box gap="16px" pb={"16px"} flex={1} minW="200px" maxW={"300px"} bg="#FFF" rounded={"20px"} boxShadow="xl" cursor={"pointer"} onClick={onOpen} >
-        <Image mb="16px" src={sendLetter.ani.album_file} maxH="300px" objectFit={"cover"} fallback={<Center w="100%" h="200px" ><Spinner /></Center>} rounded="20px" w="100%" />
-        <Box gap={"8px"} px="8px">
+      <Flex p="16px" flexWrap={["wrap","nowrap"]}  bg="#FFF" rounded={"20px"} boxShadow="xl" cursor={"pointer"} onClick={onOpen} >
+        <Image  src={sendLetter.ani.album_file} w={["100%","200px"]} objectFit={"cover"} fallback={<Center w="100%" h="200px" ><Spinner /></Center>} rounded="20px"  />
+        <Flex gap={"8px"} px="8px" w="100%" flexDirection={"column"} pt="16px">
           <Text>{`${sendLetter.ani.animal_age === "CHILD" ? "幼齡" : "成年"}`}</Text>
           <Flex>
-            <Text>性別：</Text>
+            <Text>性別:</Text>
             <Spacer></Spacer>
             {sendLetter.ani.animal_sex === "M" ? maleSvg : femaleSvg}
+          </Flex>
+          <Flex>
+            <Text>TEL:</Text>
+            <Spacer />
+            <Text>{sendLetter.ani.shelter_tel}</Text>
           </Flex>
           <Flex>
             <Text>建立時間:</Text>
             <Spacer />
             <Text>{sendLetter.ani.cDate}</Text>
           </Flex>
+          
+          <Textarea title="備註" my="8px" value={sendLetter.ani.animal_remark} readOnly />
           <Button isDisabled={!isMyLetter} onClick={() => { delLetter() }} colorScheme={"pink"} mt="8px" w="100%" >刪除</Button>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
       <AnimalModal animal={sendLetter.ani} children={undefined} isOpen={isOpen} onClose={onClose} size={"full"}/>
     </>
   )
