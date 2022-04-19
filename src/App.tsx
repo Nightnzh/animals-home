@@ -27,7 +27,7 @@ export const App = () => {
 
 
   //用於判斷是否顯示main
-  const [showMain, setShowMain] = useState(true)
+  const [showMain, setShowMain] = useState(false)
   //網頁開啟後兩秒進入main , 之後可以改成loading完data後進入
   useEffect(() => {
     const timeOut = setTimeout(() => {

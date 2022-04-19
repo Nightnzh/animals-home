@@ -131,7 +131,7 @@ const FavAniCard = ({ ani }: FavAniCardProps) => {
   return (
     <>
       <VStack
-        onClick={onOpen}
+        
         rounded={"30"}
         p={"16px"}
         gap={2}
@@ -141,7 +141,7 @@ const FavAniCard = ({ ani }: FavAniCardProps) => {
       // maxW="60"
       >
         <Wrap position="relative" >
-          <Image src={ani.album_file}  w={["100%","400px"]} h="400px"
+          <Image src={ani.album_file} onClick={onOpen}  w={["100%","400px"]} h="400px"
             objectFit={"cover"}
             fallback={<Image src={errimg} w={["100%","400px"]} h="400px" objectFit={"contain"} rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} />}
             rounded={"20"} shadow="2xl" border={"1px solid rgba(0,0,0,0.3)"} >

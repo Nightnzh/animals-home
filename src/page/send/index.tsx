@@ -423,7 +423,7 @@ const AgeSelect = ({ value, setValue }: SetValueProps) => {
     onChange: setValue,
     value: value
   })
-
+  //ADULT
   // const group = getRootProps()
   return (
     <FormControl gap={"16px"}
@@ -431,8 +431,8 @@ const AgeSelect = ({ value, setValue }: SetValueProps) => {
       isRequired>
       <FormLabel>年齡</FormLabel>
       <Flex gap={"4px"} >
-        <RadioCard  {...getRadioProps({ value: "ADULT" })}><Text fontWeight={"bold"}>幼齡</Text></RadioCard>
-        <RadioCard  {...getRadioProps({ value: "CHILD" })}><Text fontWeight={"bold"}>成年</Text></RadioCard>
+        <RadioCard  {...getRadioProps({ value: "CHILD" })}><Text fontWeight={"bold"}>幼齡</Text></RadioCard>
+        <RadioCard  {...getRadioProps({ value: "ADULT" })}><Text fontWeight={"bold"}>成年</Text></RadioCard>
       </Flex>
     </FormControl>
   )

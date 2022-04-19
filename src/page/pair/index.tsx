@@ -21,22 +21,14 @@ export const Pair = () => {
 
   const [isSmallThan700] = useMediaQuery("(max-width: 700px)")
 
-  // if(isSuccess){
-  //   store.dispatch(replaceAnimals(data))
-  //   // localStorage.setItem("animals-home",JSON.stringify(data))
-  // }
 
   useEffect(() => {
     if (isSuccess) {
       store.dispatch(replaceAnimals(data))
-      // localStorage.setItem("animals-home",JSON.stringify(data))
     }
   })
 
 
-  //for testing 
-  // const testData = localStorage.getItem("animals-home")
-  // store.dispatch(replaceAnimals(JSON.parse(testData!!)))
 
   return (
     <Box mt="60px" height="calc(100vh - 60px)"  bgColor="#f7f7f7" overflowY={"scroll"}>
@@ -52,7 +44,7 @@ export const Pair = () => {
             }
           </Center>
         </Box>
-        <Box flex={1} boxShadow="inner"  position={"relative"}>
+        <Box w="100%"  boxShadow="inner"  position={"relative"}>
           
           {isSuccess ? <AnimalViewer /> : ""}
           {/* <Button onClick={refetch} position="absolute" right={"50px"} top="50px" >refetch data</Button> */}

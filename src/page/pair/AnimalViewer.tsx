@@ -141,7 +141,6 @@ const PairAnimalViewer = (props: PropsFromRedux) => {
   return (
     <>
       <Container
-        
         // border="1px"
         // h="100%"
         // flexDirection="column"
@@ -206,7 +205,7 @@ const AnimalCard = ({ animal, onXXClick, onFavClick, onInfoClick }: AnimalCardPr
 
   if (animal === undefined) {
     return (
-      <Box flex={7} border={border} boxSizing="border-box" width="100%" height={"400px"} position="relative"  >
+      <Box flex={7} border={border} boxSizing="border-box" width="100%" height={"70vh"} position="relative"  >
         <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(20deg)" zIndex="2" bgColor="#FFF" />
         <Box border={border} boxShadow="2xl" w={width} h={height} rounded={rounded} position="absolute" top="50%" left="50%" transform="translate(-50%,-50%) rotate(10deg)" zIndex="1" bgColor="#FFF" />
         <Text

@@ -1,14 +1,15 @@
-import { Avatar, Box, Button, Center, Container, Flex, HStack, Image, Link, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react"
+import { Avatar, Box, Button, Center, Container, Flex, HStack, IconButton, Image, Link, Menu, MenuButton, MenuItem, MenuList, Text, useMediaQuery, useToast } from "@chakra-ui/react"
 import headerLogo from "../asset/header_logo.svg"
 import { useContext } from "react"
 import { Ctx } from "../commen/context"
-import { Link as Linker, useLocation } from "react-router-dom"
+import { Link as Linker, useLocation, useNavigate } from "react-router-dom"
 import { AuthAlert } from "./auth/authAlert"
 import { useSelector } from "react-redux"
 import { StoreState } from "../redux/store"
-import { FaUserMinus } from "react-icons/fa"
+import { FaAccusoft, FaHamburger, FaSignOutAlt, FaUserMinus } from "react-icons/fa"
 import { useFirebase } from "react-redux-firebase"
 import { ColorModeSwitcher } from "../ColorModeSwitcher"
+import firebase from "firebase"
 
 
 export const AppBar = () => {
@@ -16,8 +17,9 @@ export const AppBar = () => {
   const ctx = useContext(Ctx)
   const auth = useSelector((state: StoreState) => state.firebase.auth)
   const location = useLocation()
+  const [isMax700] = useMediaQuery("(max-width:700px)")
 
-
+  
 
   return (
     <Box p="2" position="fixed" top="0" w="100%" boxShadow="xl" h="60px" zIndex={"1000"} bgColor="whiteAlpha">
@@ -35,20 +37,26 @@ export const AppBar = () => {
             }
           </Center>
           {/* <Spacer /> */}
-          <Center  >
-            <Flex>
-              {ctx.routes.map(value => <LinkItem key={value.tit}
-                iconObj={<value.iconObj boxSize="6" pathName={value.path} />}
-                tit={value.tit} pathName={value.path}
-                alt={null} />)
-              }
-            </Flex>
+
+          {!isMax700 ?
+            <Center  >
+              <Flex>
+                {ctx.routes.map(value => <LinkItem key={value.tit}
+                  iconObj={<value.iconObj boxSize="6" pathName={value.path} />}
+                  tit={value.tit} pathName={value.path}
+                  alt={null} />)
+                }
+
+              </Flex>
+              <AuthAlert />
+            </Center>
+            : <MyMenu />
+          }
 
 
-            <AuthAlert />
-            {/* <ColorModeSwitcher/> */}
-            {/* <MyMenu /> */}
-          </Center>
+
+          {/* <ColorModeSwitcher/> */}
+          {/* <MyMenu /> */}
 
         </Flex>
       </Container>
@@ -59,26 +67,60 @@ export const AppBar = () => {
 //not use
 const MyMenu = () => {
 
-  const firebase = useFirebase()
+  const firebasee = useFirebase()
   const auth = useSelector((state: StoreState) => state.firebase.auth)
+  const ctx = useContext(Ctx)
+  const nav = useNavigate()
+  const toast = useToast()
+
+  function loginWithGoogle() {
+
+
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+    firebasee.auth().signInWithPopup(googleAuthProvider)
+      .then(() => {
+        toast({
+          status: "success",
+          description: "Login success."
+        })
+      })
+      .catch(e => {
+        toast({
+          status: "error",
+          description: "Login error."
+        })
+      })
+      
+  }
 
   return (
-    <Menu >
-      <MenuButton
-        as={Button}
-        aria-label='Options'
-        variant='outline'
-        colorScheme="teal"
-      >LOGIN</MenuButton>
-      <MenuList>
-        {!auth.isEmpty && <MenuItem icon={<FaUserMinus />} onClick={() => { alert("TODO:新增個人檔案設定、信箱驗證、手機驗證等") }}>
-          Profile
-        </MenuItem>}
+    <>
+      <Menu >
 
-        {/* {auth.isEmpty && <MenuItem  onClick={() => { }} icon={<FaAccusoft />}>Login</MenuItem>} */}
-        {/* {!auth.isEmpty && <MenuItem onClick={() => firebase.logout()} icon={<FaSignOutAlt />}>Logout</MenuItem>} */}
-      </MenuList>
-    </Menu>
+        <MenuButton
+          as={IconButton}
+          aria-label='Options'
+          variant='outline'
+          colorScheme="teal"
+          children={<Center><FaHamburger /></Center>}
+        />
+
+        <MenuList>
+          {ctx.routes.map(value => (
+            <MenuItem key={value.tit} onClick={() => {
+              console.log('tews');
+              nav(value.path, { replace: true })
+            }} icon={<value.iconObj pathName={value.path} />}> {value.tit} </MenuItem>
+          ))
+          }
+
+
+          {auth.isEmpty && <MenuItem onClick={loginWithGoogle} icon={<FaAccusoft />}>Login</MenuItem>}
+          {!auth.isEmpty && <MenuItem onClick={() => firebasee.logout()} icon={<FaSignOutAlt />}>{auth.displayName+"(Logout)"}</MenuItem>}
+        </MenuList>
+      </Menu>
+    </>
   )
 }
 

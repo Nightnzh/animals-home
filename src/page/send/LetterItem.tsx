@@ -1,4 +1,5 @@
 import { useToast, Box, Center, Spinner, Flex, Spacer, Button, Image, Text, useDisclosure, Textarea } from "@chakra-ui/react"
+import { MouseEventHandler } from "react"
 import { useSelector } from "react-redux"
 import { useFirestore } from "react-redux-firebase"
 import { AnimalModal } from "../../component/AnimalInfoModal"
@@ -28,7 +29,8 @@ export const LetterItem = ({ sendLetter, docId }: LetterItemProps) => {
       toast({
         status: "success",
         description: "刪除成功",
-        position: "top"
+        position: "top",
+        
       })
     }).catch(() => {
       toast({
@@ -41,11 +43,15 @@ export const LetterItem = ({ sendLetter, docId }: LetterItemProps) => {
 
   const {  isOpen , onOpen ,onClose} = useDisclosure()
 
+  const handleOnOpen = ( e : MouseEvent) => {
+    e.preventDefault()
+  }
+
 
   return (
     <>
-      <Flex p="16px" flexWrap={["wrap","nowrap"]}  bg="#FFF" rounded={"20px"} boxShadow="xl" cursor={"pointer"} onClick={onOpen} >
-        <Image  src={sendLetter.ani.album_file} w={["100%","200px"]} objectFit={"cover"} fallback={<Center w="100%" h="200px" ><Spinner /></Center>} rounded="20px"  />
+      <Flex p="16px" flexWrap={["wrap","nowrap"]}  bg="#FFF" rounded={"20px"} boxShadow="xl" cursor={"pointer"}  >
+        <Image onClick={onOpen}  src={sendLetter.ani.album_file} w={["100%","200px"]} objectFit={"cover"} fallback={<Center w="100%" h="200px" ><Spinner /></Center>} rounded="20px"  />
         <Flex gap={"8px"} px="8px" w="100%" flexDirection={"column"} pt="16px">
           <Text>{`${sendLetter.ani.animal_age === "CHILD" ? "幼齡" : "成年"}`}</Text>
           <Flex>

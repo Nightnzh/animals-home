@@ -71,36 +71,36 @@ export const HosSectionInner = () => {
           return (
             <Box>
               <Flex gap={"16px"}>
-                {pAN.map(value => <Link  href={`#${value}`} >{value}</Link>)}
+                {pAN.map(value => <Link  key={value} href={`#${value}`} >{value}</Link>)}
               </Flex>
-              {pAN.map(value => <AreaP data={data} areaName={value} />)}
+              {pAN.map(value => <AreaP key={value} data={data} areaName={value} />)}
             </Box>
           )
         case "中部":
           return (
             <Box>
               <Flex gap={"16px"}>
-                {pAM.map(value => <Link href={`#${value}`} >{value}</Link>)}
+                {pAM.map(value => <Link key={value} href={`#${value}`} >{value}</Link>)}
               </Flex>
-              {pAM.map(value => <AreaP data={data} areaName={value} />)}
+              {pAM.map(value => <AreaP key={value} data={data} areaName={value} />)}
             </Box>
           )
         case "南部":
           return (
             <Box>
               <Flex gap={"16px"}>
-                {pAS.map(value => <Link href={`#${value}`} >{value}</Link>)}
+                {pAS.map(value => <Link key={value} href={`#${value}`} >{value}</Link>)}
               </Flex>
-              {pAS.map(value => <AreaP data={data} areaName={value} />)}
+              {pAS.map(value => <AreaP key={value} data={data} areaName={value} />)}
             </Box>
           )
         case "東部":
           return (
             <Box>
               <Flex gap={"16px"}>
-                {pAE.map(value => <Link href={`#${value}`} >{value}</Link>)}
+                {pAE.map(value => <Link key={value} href={`#${value}`} >{value}</Link>)}
               </Flex>
-              {pAE.map(value => <AreaP data={data} areaName={value} />)}
+              {pAE.map(value => <AreaP key={value} data={data} areaName={value} />)}
             </Box>
           )
         default:
@@ -130,11 +130,7 @@ export const HosSectionInner = () => {
         </Center>
         {isLoading || isFetching ? <Spinner /> : <></>}
         {isError && <Text>{error.message}</Text>}
-
-        {
-          isSuccess && item(place)
-        }
-
+        {isSuccess && item(place)}
       </Container>
     </Box>
   )
@@ -155,8 +151,8 @@ const AreaP = ({ data, areaName }: AreaProps) => {
       </Flex>
       <hr />
       <Grid mt="16px" templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} gap={"8px"}>
-        {data.filter(value => value.縣市 === areaName).map(value => (
-          <GridItem>
+        {data.filter(value => value.縣市 === areaName).map((value,index) => (
+          <GridItem key={index} >
             <HosItemm hosName={value.機構名稱} tel={value.機構電話} address={value.機構地址} />
           </GridItem>
         ))}

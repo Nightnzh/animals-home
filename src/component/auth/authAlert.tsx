@@ -55,7 +55,6 @@ export const AuthAlert = () => {
         setIsLoading(false);
         onClose()
       })
-
   }
 
 
